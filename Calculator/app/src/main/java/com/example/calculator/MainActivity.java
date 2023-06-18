@@ -39,7 +39,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         float Num1, Num2, Result = 0;
         String operation = "";
         boolean correctOperation = true;
-        try {
+        if(TextUtils.isEmpty(etNum1.getText().toString()) || TextUtils.isEmpty(etNum2.getText().toString()) || TextUtils.isEmpty(etOperation.getText().toString()) ){
+            Toast toast = Toast.makeText(getApplicationContext(), "Вы забыли ввести данные!", Toast.LENGTH_LONG);
+            toast.setMargin(50, 50);
+            toast.show();
+            return;
+        }
             Num1 = Float.parseFloat(etNum1.getText().toString());
             Num2 = Float.parseFloat(etNum2.getText().toString());
             operation = etOperation.getText().toString();
@@ -61,44 +66,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     correctOperation = false;
                     break;
             }
-            
-        } catch (ArithmeticException e) {
-            int duration = Toast.LENGTH_SHORT;
-            if (toastError != null) {
-                toastError.cancel();
-            }
-            toastError = Toast.makeText(this, R.string.divide_zero, duration);
-            toastError.show();
-            return;
-        }
-        catch (NullPointerException e){
-            int duration = Toast.LENGTH_SHORT;
-            if (toastError != null) {
-                toastError.cancel();
-            }
-            toastError = Toast.makeText(this, R.string.null_data, duration);
-            toastError.show();
-            return;
-        }
-        catch (NumberFormatException e){
-            int duration = Toast.LENGTH_SHORT;
-            if (toastError != null) {
-                toastError.cancel();
-            }
-            toastError = Toast.makeText(this, R.string.wrong_format, duration);
-            toastError.show();
-            return;
-        }
 
-        if(correctOperation) {
+
             tvResult.setText(Num1 + " " + operation + " " + Num2 + "=" + Result);
-        } else {
-            int duration = Toast.LENGTH_SHORT;
-            if (toastError != null) {
-                toastError.cancel();
-            }
-            toastError = Toast.makeText(this, R.string.wrong_operation, duration);
-            toastError.show();
-        }
+
     }
 }
